@@ -1,0 +1,24 @@
+[project]
+name = "wechat-topic-fetch-tool"
+version = "0.1.0"
+description = "A content source governor for discovering, fetching, and routing AI/tech news from multiple internet sources"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Mileson" }
+]
+keywords = ["content-discovery", "rss", "reddit", "youtube", "ai-news", "source-governor"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet :: WWW/HTTP",
+]
+
+[project.scripts]
+topic-fetch = "scripts.source_router:main"

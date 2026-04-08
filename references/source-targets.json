@@ -1,0 +1,42 @@
+{
+  "cursor_blog": {
+    "label": "Cursor Blog",
+    "url": "https://cursor.com/cn/blog"
+  },
+  "claude_blog": {
+    "label": "Claude Blog",
+    "url": "https://claude.com/blog"
+  },
+  "openai_developers_blog": {
+    "label": "OpenAI Developers Blog",
+    "url": "https://developers.openai.com/blog"
+  },
+  "google_ai_blog": {
+    "label": "Google AI Blog",
+    "url": "https://blog.google/innovation-and-ai/technology/ai/"
+  },
+  "indiehackers_stories": {
+    "label": "Indie Hackers Stories",
+    "url": "https://www.indiehackers.com/stories"
+  },
+  "anthropic_news": {
+    "label": "Anthropic News",
+    "url": "https://www.anthropic.com/news"
+  },
+  "anthropic_research": {
+    "label": "Anthropic Research",
+    "url": "https://www.anthropic.com/research"
+  },
+  "cloudflare_blog": {
+    "label": "Cloudflare Blog",
+    "url": "https://blog.cloudflare.com/"
+  },
+  "github_blog": {
+    "label": "GitHub Blog",
+    "url": "https://github.blog/"
+  },
+  "vercel_blog": {
+    "label": "Vercel Blog",
+    "url": "https://vercel.com/blog"
+  }
+}
