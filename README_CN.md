@@ -8,6 +8,10 @@
 
 [English](README.md)
 
+[功能特性](#readme-section-1) · [快速开始](#readme-section-2) · [工作流程](#readme-section-3) · [技术栈](#readme-section-4) · [项目结构](#readme-section-5) · [仓库导航](#readme-section-6) · [贡献](#readme-section-7)
+
+<a id="readme-section-1"></a>
+
 ## 功能特性
 
 - **统一路由** — 一个 CLI 入口分发到官方博客、Reddit RSS、YouTube 频道等多个抓取器
@@ -17,15 +21,7 @@
 - **先探后抓** — 轻量 URL 探测器，在正式抓取前验证新源可用性
 - **零依赖** — 纯 Python 标准库，无需 `pip install`
 
-## 技术栈
-
-| 层级 | 技术 |
-|------|------|
-| 语言 | Python 3.10+ |
-| HTTP 客户端 | `urllib.request`（`curl` 降级） |
-| RSS 解析 | `xml.etree.ElementTree` |
-| 命令行 | `argparse` |
-| 外部依赖（可选） | `curl`、兄弟 Skill |
+<a id="readme-section-2"></a>
 
 ## 快速开始
 
@@ -70,6 +66,31 @@ python3 scripts/source_router.py youtube-transcript <video_url>
 python3 scripts/source_router.py probe https://example.com https://another.com
 ```
 
+<a id="readme-section-3"></a>
+
+## 工作流程
+
+1. **读取记忆** — 从 `data/memory.md` 加载积累的源经验
+2. **选择频道** — 即刻（快速、有力）或微信公众号（深度、结构化）
+3. **选择源** — 查阅 `references/source-catalog.md` 获取优先级排序的源列表
+4. **路由到工具** — 使用 `references/tool-catalog.md` 选择正确的抓取器及降级方案
+5. **抓取与解析** — 通过 `source_router.py` 或独立脚本执行
+6. **更新记忆** — 记录高/低信号模式、已验证/已屏蔽的源
+
+<a id="readme-section-4"></a>
+
+## 技术栈
+
+| 层级 | 技术 |
+|------|------|
+| 语言 | Python 3.10+ |
+| HTTP 客户端 | `urllib.request`（`curl` 降级） |
+| RSS 解析 | `xml.etree.ElementTree` |
+| 命令行 | `argparse` |
+| 外部依赖（可选） | `curl`、兄弟 Skill |
+
+<a id="readme-section-5"></a>
+
 ## 项目结构
 
 ```
@@ -98,22 +119,31 @@ wechat-topic-fetch-tool/
 └── .gitignore
 ```
 
-## 工作流程
+<a id="readme-section-6"></a>
 
-1. **读取记忆** — 从 `data/memory.md` 加载积累的源经验
-2. **选择频道** — 即刻（快速、有力）或微信公众号（深度、结构化）
-3. **选择源** — 查阅 `references/source-catalog.md` 获取优先级排序的源列表
-4. **路由到工具** — 使用 `references/tool-catalog.md` 选择正确的抓取器及降级方案
-5. **抓取与解析** — 通过 `source_router.py` 或独立脚本执行
-6. **更新记忆** — 记录高/低信号模式、已验证/已屏蔽的源
+## 仓库导航
+
+| 入口 | 内容 |
+| --- | --- |
+| [`SKILL.md`](SKILL.md) | Agent 使用规则与执行入口 |
+| [`examples/`](examples/) | 可参考的输入与调用示例 |
+| [`pyproject.toml`](pyproject.toml) | Python 包与工具配置 |
+| [`references/`](references/) | 技能规则与输入输出合同 |
+| [`scripts/`](scripts/) | 开发与维护脚本 |
+
+<a id="readme-section-7"></a>
 
 ## 贡献
 
 欢迎贡献！随时可以提 Issue 或提交 Pull Request。
 
+<a id="readme-section-8"></a>
+
 ## 许可证
 
 本项目基于 [MIT 许可证](LICENSE) 开源。
+
+<a id="readme-section-9"></a>
 
 ## 作者
 
