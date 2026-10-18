@@ -1,140 +1,154 @@
-# WeChat Topic Fetch Tool
+<a id="wechat-topic-fetch-tool"></a>
 
-> A content source governor for discovering, fetching, and routing AI/tech news from official blogs, Reddit, YouTube, and more — built for content creators on Jike and WeChat Official Accounts.
+# 微信选题素材采集工具
+
+> 内容源治理工具 —— 从官方博客、Reddit、YouTube 等多源发现、抓取和路由 AI/科技资讯，专为即刻和微信公众号内容创作者打造。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
-[![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero-green.svg)]()
+[![零依赖](https://img.shields.io/badge/依赖-零-green.svg)]()
 
-[中文文档](README_CN.md)
 
-[Features](#readme-section-1) · [Quick Start](#readme-section-2) · [How It Works](#readme-section-3) · [Tech Stack](#readme-section-4) · [Project Structure](#readme-section-5) · [Contributing](#readme-section-6) · [License](#readme-section-7)
+
+[功能特性](#readme-section-1) · [快速开始](#readme-section-2) · [工作流程](#readme-section-3) · [技术栈](#readme-section-4) · [项目结构](#readme-section-5) · [仓库导航](#readme-section-6) · [贡献](#readme-section-7)
 
 <a id="readme-section-1"></a>
 
-## Features
+## 功能特性
 
-- **Unified Router** — One CLI entry point dispatches to official blog fetchers, Reddit RSS, YouTube channels, and more
-- **Source Memory** — Learns high-signal and low-signal patterns across sessions, persisted in structured memory
-- **Channel Strategy** — Tailored source selection and content depth for Jike (quick hits) vs. WeChat (deep long-form)
-- **Fallback Chains** — Graceful degradation: `urllib` → `curl` → sibling skill → manual probe
-- **Probe Before Commit** — Lightweight URL tester validates new sources before full fetches
-- **Zero Dependencies** — Pure Python standard library, no `pip install` needed
+- **统一路由** — 一个 CLI 入口分发到官方博客、Reddit RSS、YouTube 频道等多个抓取器
+- **源记忆** — 跨会话学习高信号/低信号模式，持久化到结构化记忆文件
+- **频道策略** — 为即刻（快节奏短内容）和微信公众号（深度长文）定制不同的源选择和内容深度
+- **降级链** — 优雅降级：`urllib` → `curl` → 兄弟 Skill → 手动探针
+- **先探后抓** — 轻量 URL 探测器，在正式抓取前验证新源可用性
+- **零依赖** — 纯 Python 标准库，无需 `pip install`
 
 <a id="readme-section-2"></a>
 
-## Quick Start
+## 快速开始
 
-### Prerequisites
+### 前置条件
 
-- Python 3.10 or later
-- `curl` (optional, used as HTTP fallback)
+- Python 3.10 或更高版本
+- `curl`（可选，作为 HTTP 降级方案）
 
-### Installation
+### 安装
 
 ```bash
-# Clone the repo
+# 克隆仓库
 git clone https://github.com/Mileson07/wechat-topic-fetch-tool.git
 cd wechat-topic-fetch-tool
 ```
 
-Or install with pipx:
+或使用 pipx 安装：
 
 ```bash
 pipx install git+https://github.com/Mileson07/wechat-topic-fetch-tool.git
 ```
 
-### Usage
+### 使用方法
 
 ```bash
-# Fetch from a named official blog (e.g., OpenAI, Anthropic, Cursor)
+# 抓取指定官方博客（如 OpenAI、Anthropic、Cursor）
 python3 scripts/source_router.py official openai_developers_blog
 
-# Fetch from an arbitrary URL
+# 抓取任意 URL
 python3 scripts/source_router.py official https://example.com/blog
 
-# Fetch Reddit subreddit RSS
+# 抓取 Reddit 子版块 RSS
 python3 scripts/source_router.py reddit MachineLearning --limit 5
 
-# Fetch YouTube channel videos
+# 抓取 YouTube 频道视频
 python3 scripts/source_router.py youtube-channel <channel_id> --limit 5
 
-# Fetch YouTube video transcript
+# 抓取 YouTube 视频字幕
 python3 scripts/source_router.py youtube-transcript <video_url>
 
-# Probe URLs before fetching
+# 在抓取前探测 URL 可达性
 python3 scripts/source_router.py probe https://example.com https://another.com
 ```
 
 <a id="readme-section-3"></a>
 
-## How It Works
+## 工作流程
 
-1. **Read memory** — Load accumulated source experience from `data/memory.md`
-2. **Choose channel** — Jike (fast, punchy) or WeChat (deep, structured)
-3. **Select sources** — Consult `references/source-catalog.md` for priority-ranked sources
-4. **Route to tool** — Use `references/tool-catalog.md` to pick the right fetcher with fallbacks
-5. **Fetch & parse** — Execute via `source_router.py` or individual scripts
-6. **Update memory** — Record high/low signal patterns, validated/blocked sources
+1. **读取记忆** — 从 `data/memory.md` 加载积累的源经验
+2. **选择频道** — 即刻（快速、有力）或微信公众号（深度、结构化）
+3. **选择源** — 查阅 `references/source-catalog.md` 获取优先级排序的源列表
+4. **路由到工具** — 使用 `references/tool-catalog.md` 选择正确的抓取器及降级方案
+5. **抓取与解析** — 通过 `source_router.py` 或独立脚本执行
+6. **更新记忆** — 记录高/低信号模式、已验证/已屏蔽的源
 
 <a id="readme-section-4"></a>
 
-## Tech Stack
+## 技术栈
 
-| Layer | Technology |
-|-------|-----------|
-| Language | Python 3.10+ |
-| HTTP Client | `urllib.request` (with `curl` fallback) |
-| RSS Parsing | `xml.etree.ElementTree` |
-| CLI | `argparse` |
-| External (optional) | `curl`, sibling skills |
+| 层级 | 技术 |
+|------|------|
+| 语言 | Python 3.10+ |
+| HTTP 客户端 | `urllib.request`（`curl` 降级） |
+| RSS 解析 | `xml.etree.ElementTree` |
+| 命令行 | `argparse` |
+| 外部依赖（可选） | `curl`、兄弟 Skill |
 
 <a id="readme-section-5"></a>
 
-## Project Structure
+## 项目结构
 
 ```
 wechat-topic-fetch-tool/
 ├── scripts/
-│   ├── source_router.py         # Unified CLI entry point
-│   ├── official_blog_fetch.py   # Official blog/page fetcher
-│   ├── reddit_rss_fetch.py      # Reddit RSS Atom feed parser
-│   ├── youtube_source_fetch.py  # YouTube channel & transcript fetcher
-│   ├── source_probe.py          # Lightweight URL prober
-│   └── path_helpers.py          # Portable path constants
+│   ├── source_router.py         # 统一 CLI 入口
+│   ├── official_blog_fetch.py   # 官方博客/页面抓取器
+│   ├── reddit_rss_fetch.py      # Reddit RSS Atom 解析器
+│   ├── youtube_source_fetch.py  # YouTube 频道和字幕抓取器
+│   ├── source_probe.py          # 轻量 URL 探测器
+│   └── path_helpers.py          # 便携路径常量
 ├── references/
-│   ├── source-catalog.md        # Master source registry with priorities
-│   ├── tool-catalog.md          # Tool routing table with fallback chains
-│   ├── channel-playbook.md      # Channel-specific content strategy
-│   ├── source-targets.json      # Named blog/website target definitions
-│   ├── discovery-sources.md     # Guide for finding new source tools
-│   └── memory-schema.md         # Rules for source memory management
+│   ├── source-catalog.md        # 主源注册表（含优先级）
+│   ├── tool-catalog.md          # 工具路由表（含降级链）
+│   ├── channel-playbook.md      # 频道专属内容策略
+│   ├── source-targets.json      # 命名博客/网站目标定义
+│   ├── discovery-sources.md     # 新源工具发现指南
+│   └── memory-schema.md         # 源记忆管理规则
 ├── data/
-│   └── memory.md                # Accumulated source experience memory
+│   └── memory.md                # 积累的源经验记忆
 ├── examples/
-│   └── source-checklist.md      # Source evaluation checklist
-├── SKILL.md                     # Skill definition (Claude Code / Agent)
-├── pyproject.toml               # Package metadata
-├── LICENSE                      # MIT License
+│   └── source-checklist.md      # 源评估检查清单
+├── SKILL.md                     # Skill 定义（Claude Code / Agent）
+├── pyproject.toml               # 包元信息
+├── LICENSE                      # MIT 许可证
 └── .gitignore
 ```
 
 <a id="readme-section-6"></a>
 
-## Contributing
+## 仓库导航
 
-Contributions are welcome! Feel free to open issues or submit pull requests.
+| 入口 | 内容 |
+| --- | --- |
+| [`SKILL.md`](SKILL.md) | Agent 使用规则与执行入口 |
+| [`examples/`](examples/) | 可参考的输入与调用示例 |
+| [`pyproject.toml`](pyproject.toml) | Python 包与工具配置 |
+| [`references/`](references/) | 技能规则与输入输出合同 |
+| [`scripts/`](scripts/) | 开发与维护脚本 |
 
 <a id="readme-section-7"></a>
 
-## License
+## 贡献
 
-This project is licensed under the [MIT License](LICENSE).
+欢迎贡献！随时可以提 Issue 或提交 Pull Request。
 
 <a id="readme-section-8"></a>
 
-## Author
+## 许可证
+
+本项目基于 [MIT 许可证](LICENSE) 开源。
+
+<a id="readme-section-9"></a>
+
+## 作者
 
 - X: [Mileson07](https://x.com/Mileson07)
-- Xiaohongshu: [超级峰](https://xhslink.com/m/4LnJ9aB1f97)
-- Douyin: [超级峰](https://v.douyin.com/rH645q7trd8/)
+- 小红书: [超级峰](https://xhslink.com/m/4LnJ9aB1f97)
+- 抖音: [超级峰](https://v.douyin.com/rH645q7trd8/)
